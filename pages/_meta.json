@@ -6,5 +6,9 @@
     "clean_code": {
         "title": "Clean Code",
         "type": "page"
+    },
+    "design_patterns": {
+        "title": "Design Patterns",
+        "type": "page"
     }
 }
