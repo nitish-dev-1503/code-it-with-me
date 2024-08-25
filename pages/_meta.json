@@ -2,5 +2,9 @@
     "docs": {
         "title": "Home",
         "type": "page"
+    },
+    "clean_code": {
+        "title": "Clean Code",
+        "type": "page"
     }
 }
