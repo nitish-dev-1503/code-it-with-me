@@ -10,5 +10,9 @@
     "design_patterns": {
         "title": "Design Patterns",
         "type": "page"
+    },
+    "playground": {
+        "title": "Playground",
+        "type": "page"
     }
 }

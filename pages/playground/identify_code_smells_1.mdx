@@ -1,0 +1,49 @@
+import { Tabs } from 'nextra/components'
+
+
+### Problem Statement
+Identify the code smells present in the following Java code snippet. Explain why each code smell is problematic and suggest potential improvements.
+
+```java copy
+public class OrderProcessor {
+    private List<Product> products;
+    private Customer customer;
+
+    public OrderProcessor(List<Product> products, Customer customer) {
+        this.products = products;
+        this.customer = customer;
+    }
+
+    public void processOrder() {
+        for (Product product : products) {
+            if (product.getPrice() > 1000) {
+                System.out.println("Product " + product.getName() + " is expensive!");
+            }
+            // ... other order processing logic
+        }
+    }
+}
+
+```
+
+#### Instructions
+- **Identify Code Smells:** Review the code and identify at least five code smells present in the OrderProcessor class. These could include issues related to readability, maintainability, or design.
+- **Describe the Code Smells:** For each identified code smell, provide a brief description explaining why it is a problem and what negative impact it might have on the code.
+- **Suggest Improvements (Optional):** If possible, suggest ways to refactor the code to eliminate or mitigate the code smells. You don't need to provide the full refactored code, just a description of what changes should be made.
+
+
+### Solution
+
+1. **Code Smell 1: Magic numbers**
+<br/>The value `1000` is a magic number, making the code less readable and maintainable.
+<br />Replace magic numbers with constants: Define a constant for the `1000` value to improve readability and maintainability.
+
+
+2. **Code Smell 2: God object**
+<br/>The `OrderProcessor` class might be too large and responsible for too many tasks, violating the Single Responsibility Principle.
+<br />Break down the `OrderProcessor` class: Consider splitting the `OrderProcessor` class into smaller, more focused classes that adhere to the Single Responsibility Principle.
+
+
+3. **Code Smell 3: Tight coupling**
+<br/>The `OrderProcessor` class is tightly coupled to the `Product` and `Customer` classes, making it difficult to change or reuse.
+<br />Introduce dependency injection: Use dependency injection to decouple the `OrderProcessor` class from its dependencies, making it more flexible and testable.
