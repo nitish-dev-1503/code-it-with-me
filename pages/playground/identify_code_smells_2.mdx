@@ -1,0 +1,76 @@
+import { Tabs } from 'nextra/components'
+
+
+### Problem Statement
+You are given the following Java code snippet, which implements a simple order processing system. The code is functional, but it contains several code smells that could make it difficult to maintain and extend. Your task is to identify and describe the code smells present in the snippet.
+
+```java copy
+
+public class OrderProcessor {
+
+    private String customerName;
+    private String customerAddress;
+    private List<String> items;
+    private double totalPrice;
+
+    public void addItem(String item, double price) {
+        if (items == null) {
+            items = new ArrayList<>();
+        }
+        items.add(item);
+        totalPrice += price;
+    }
+
+    public void processOrder() {
+        if (customerName == null || customerAddress == null || items == null || items.isEmpty()) {
+            System.out.println("Order cannot be processed.");
+        } else {
+            System.out.println("Processing order for " + customerName);
+            System.out.println("Shipping to: " + customerAddress);
+            System.out.println("Order items: " + items);
+            System.out.println("Total price: $" + totalPrice);
+        }
+    }
+
+    public void resetOrder() {
+        customerName = null;
+        customerAddress = null;
+        items.clear();
+        totalPrice = 0.0;
+    }
+
+    // ... other methods
+}
+
+```
+
+#### Instructions
+- **Identify Code Smells:** Review the code and identify at least five code smells present in the OrderProcessor class. These could include issues related to readability, maintainability, or design.
+- **Describe the Code Smells:** For each identified code smell, provide a brief description explaining why it is a problem and what negative impact it might have on the code.
+- **Suggest Improvements (Optional):** If possible, suggest ways to refactor the code to eliminate or mitigate the code smells. You don't need to provide the full refactored code, just a description of what changes should be made.
+
+
+### Solution
+1. **Code Smell 1: Long Method**
+<br/>The `processOrder` method is responsible for multiple tasks: checking order validity, printing order details, and calculating the total price. This makes the method longer and harder to understand.
+<br />Split the processOrder method into smaller, more focused methods, each handling a single responsibility.
+
+
+2. **Code Smell 2: Primitive Obsession**
+<br/>The `customerName` and `customerAddress` fields are represented as plain strings. This can lead to duplication of logic and makes it difficult to handle more complex scenarios (e.g., address validation).
+<br />Encapsulate customerName and customerAddress into separate value objects like Customer or Address.
+
+
+3. **Code Smell 3: Inconsistent State**
+<br/>The method `resetOrder` does not properly reset the items list, which could lead to unexpected behavior if the method is called multiple times.
+<br />Ensure that all fields are consistently reset by either reinitializing the items list or setting it to null.
+
+
+4. **Code Smell 4: Data Clumps**
+<br/>The `customerName` and `customerAddress` fields often appear together, suggesting they could be combined into a single object.
+<br />Create a Customer class that contains both the name and address.
+
+
+5. **Code Smell 5: Magic Numbers**
+<br/>The method `resetOrder` uses hardcoded values (e.g., 0.0) to reset the state, which can be confusing and error-prone.
+<br/>Use constants or enums to represent these values for better readability and maintainability.
