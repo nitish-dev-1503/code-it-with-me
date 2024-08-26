@@ -1,0 +1,64 @@
+### Problem Statement
+Imagine you're working on a library management system that handles the operations of a library. You need to implement a feature that allows the library to notify users when their borrowed books are overdue. Currently, the system sends an email to users, but the library plans to introduce SMS notifications in the future. Additionally, the library wants to ensure that the notification process is loosely coupled with the lending system, so that changes in one area don't heavily impact others. The system needs to be flexible enough to handle changes, such as adding new types of notifications (e.g., SMS, Email). Given the following scenario, identify and apply suitable design patterns to improve the design of the system.
+
+
+### Solution
+
+
+#### Example implementation using Strategy Patterns
+The current implementation is tightly coupled to email notifications. This makes it difficult to extend the system to support additional notification methods like SMS or push notifications.
+
+Use the Strategy Pattern to decouple the notification method from the main logic, allowing for easy addition of new notification types.
+
+
+``` java copy 
+// Step 1: Define the NotificationStrategy interface
+public interface NotificationStrategy {
+    void sendNotification(String message, String recipient);
+}
+
+// Step 2: Create concrete strategy classes
+
+// EmailNotification strategy
+public class EmailNotification implements NotificationStrategy {
+    @Override
+    public void sendNotification(String message, String recipient) {
+        System.out.println("Sending email to " + recipient + " with message: " + message);
+        // Email sending logic
+    }
+}
+
+// SMSNotification strategy
+public class SMSNotification implements NotificationStrategy {
+    @Override
+    public void sendNotification(String message, String recipient) {
+        System.out.println("Sending SMS to " + recipient + " with message: " + message);
+        // SMS sending logic
+    }
+}
+
+// Step 3: Modify the NotificationService to use the strategy
+public class NotificationService {
+    private NotificationStrategy strategy;
+
+    public NotificationService(NotificationStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public void notifyUser(String message, String recipient) {
+        strategy.sendNotification(message, recipient);
+    }
+}
+
+// Example usage
+public class LibraryManagementSystem {
+    public static void main(String[] args) {
+        NotificationService emailService = new NotificationService(new EmailNotification());
+        emailService.notifyUser("Your book is overdue!", "user@example.com");
+
+        NotificationService smsService = new NotificationService(new SMSNotification());
+        smsService.notifyUser("Your book is overdue!", "123-456-7890");
+    }
+}
+
+```
