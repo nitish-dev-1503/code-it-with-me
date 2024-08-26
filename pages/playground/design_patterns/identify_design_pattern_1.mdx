@@ -1,0 +1,47 @@
+### Problem Statement
+You're designing a video game where players can equip different weapons. Each weapon has unique attributes like damage, range, and fire rate.
+Identify a suitable design pattern to represent the relationship between weapons and their attributes
+
+#### Hints
+- Consider the flexibility required to add new weapons or modify existing ones.
+- Think about how to avoid tightly coupling the weapon class to specific attribute values.
+
+### Solution
+
+#### Possible design patterns to consider
+- **Factory Pattern:** Create a factory class to create different weapon objects based on their type.
+- **Strategy Pattern:** Define a strategy interface for weapon attributes and implement different strategy classes for specific weapons.
+- **Builder Pattern:** Use a builder pattern to construct weapon objects step-by-step, allowing for flexibility in customization.
+
+#### Example implementation using Strategy Patterns
+
+``` java copy 
+
+interface Weapon {
+    void attack();
+}
+
+class Sword implements Weapon {
+    public void attack() {
+        System.out.println("Attacking with a sword.");
+    }
+}
+
+class Bow implements Weapon {
+    public void attack() {
+        System.out.println("Attacking with a bow.");
+    }
+}
+
+class Player {
+    private Weapon weapon;
+
+    public Player(Weapon weapon) {
+        this.weapon = weapon;
+    }
+
+    public void attack() {
+        weapon.attack();
+    }
+}
+```
